@@ -1,0 +1,30 @@
+/* Dashboard.css */
+.dashboard-bg {
+  background-image: url('../assets/dash.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  color: white;
+}
+
+.prediction-section {
+  background-color: rgba(255, 255, 255, 0.95); /* optional translucent white */
+  border: 2px solid #198754; /* Bootstrap success green or customize */
+  border-radius: 12px;
+}
+
+
+.predict-bg{
+  background-image: url('../assets/mt.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: fit-content;
+  color: rgb(5, 5, 5);
+}
+
+.card-right-align {
+  margin-left: auto;
+  margin-right: 20rem;
+}
