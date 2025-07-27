@@ -5,7 +5,7 @@ import DashboardHeader from '../components/DashboardHeader';
 import Footer from '../components/Footer';
 import { predictCrops } from '../api/predictapi';
 
-const PredictForm = () => {
+const PredictForm = ({user}) => {
   const [formData, setFormData] = useState({
     nitrogen: '',
     phosphorus: '',
@@ -50,7 +50,7 @@ const PredictForm = () => {
 
   return (
     <>
-      <DashboardHeader />
+      <DashboardHeader user={user} />
       <div className='predict-bg py-5'>
         <Card className="p-4 shadow-sm" style={{ maxWidth: '500px', margin: '0 auto' }}>
           <Form onSubmit={(e) => e.preventDefault()}>

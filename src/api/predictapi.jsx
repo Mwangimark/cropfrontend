@@ -4,19 +4,20 @@ const API_BASE_URL = 'http://localhost:8000/api'; // Adjust as per your backend
 
 // Get token from localStorage or context if needed
 const getAuthHeaders = () => {
-    const token = localStorage.getItem('access'); // assumes you stored JWT as accessToken
-    return {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-    };
+  const token = localStorage.getItem('access'); // assumes you stored JWT as accessToken
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
 };
+
 
 // Prediction API
 export const predictCrops = async (formData) => {
   try {
-    const response = await fetch("http://localhost:8000/api/recommendations/", {
+    const response = await fetch(`${API_BASE_URL}/recommendations/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,10 +37,26 @@ export const predictCrops = async (formData) => {
   }
 };
 
-// get predictions of an individual user
-// export const getPastPredictions = async ()={
-//   try{
-//     const response = 
-//   }
-// }
+
+
+//  get past predictions of a specific user
+export const getPastPredictions = async () => {
+  try {
+    const headers = getAuthHeaders(); // already contains headers
+
+    const response = await axios.get(
+      `${API_BASE_URL}/recommendations/my-recommendations/`,
+      headers // ✅ pass the object directly
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Prediction Error:", error);
+    return null;
+  }
+};
+
+
+
+
 
