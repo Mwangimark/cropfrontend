@@ -91,7 +91,7 @@ const PredictForm = ({user}) => {
               {Predictions.map((crop, index) => (
                 <Col md={3} key={index}>
                   <Card className="h-100 shadow-sm crop-card">
-                    <Card.Img variant="top" src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTHOasUeqJ_ZGX-MMEJGlX8HduGaW4ufsaAA&s'
+                    <Card.Img variant="top" src= {crop.image}
                      height="150" 
                      style={{ objectFit: 'cover' }} />
                     <Card.Body>

@@ -31,7 +31,7 @@ function Dashboard({ user }) {
         <>
             <DashboardHeader user={user} />
             <div className="dashboard-bg">
-                <div className="d-flex justify-content-end mb-2">
+                <div className="btnpredict d-flex justify-content-end mb-2 ">
                     <button
                         style={{ marginRight: '20rem' }}
                         className="btn btn-success px-4 py-2 rounded-pill mt-2"

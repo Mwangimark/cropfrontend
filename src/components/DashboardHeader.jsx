@@ -7,7 +7,7 @@ const DashboardHeader = ({ user }) => {
     const navigate = useNavigate();
 
     return (
-        <header className="bg-success text-white py-2 shadow-sm">
+        <header className="bg-success text-white py-2 shadow-sm fixed-top">
             <Container fluid>
                 <Row className="align-items-center justify-content-between px-3">
 
