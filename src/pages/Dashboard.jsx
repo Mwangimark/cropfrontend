@@ -15,7 +15,6 @@ function Dashboard({ user }) {
                 const response = await getPastPredictions();
                 if (Array.isArray(response)) {
                     setRecommendations(response);
-                    console.log(response) // Save entire list
                 } else {
                     console.warn("Unexpected format from prediction API");
                 }
@@ -26,6 +25,11 @@ function Dashboard({ user }) {
 
         fetchPredictions();
     }, []);
+
+    const handleDeletePrediction = async (id) => {
+
+    }
+
 
     return (
         <>
@@ -55,7 +59,17 @@ function Dashboard({ user }) {
                                 {rec.predicted_crops.map((crop, index) => (
                                     <Col md={3} key={index}>
                                         <Card className="h-100 shadow-sm crop-card">
-                                            <Card.Img variant="top" src={crop.image} height="150" style={{ objectFit: 'cover' }} />
+                                            <Card.Img
+                                                variant="top"
+                                                src={crop.image}
+                                                style={{
+                                                    height: '250px',    
+                                                    width: '100%',        
+                                                    objectFit: 'cover',      
+                                                    objectPosition: 'center' 
+                                                }}
+                                            />
+
                                             <Card.Body>
                                                 <Card.Title>{crop.name}</Card.Title>
                                                 <Card.Text>{crop.description}</Card.Text>
@@ -80,6 +94,7 @@ function Dashboard({ user }) {
                                             <p><strong>pH:</strong> {rec.ph}</p>
                                             <p><strong>Rainfall:</strong> {rec.rainfall} mm</p>
                                         </Card.Body>
+                                        <button className='btn btn-outline-danger' onClick={() => handleDeletePrediction(rec.id)}>Delete</button>
                                     </Card>
                                 </Col>
                             </Row>

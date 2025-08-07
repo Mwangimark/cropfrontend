@@ -5,7 +5,7 @@ import DashboardHeader from '../components/DashboardHeader';
 import Footer from '../components/Footer';
 import { predictCrops } from '../api/predictapi';
 
-const PredictForm = ({user}) => {
+const PredictForm = ({ user }) => {
   const [formData, setFormData] = useState({
     nitrogen: '',
     phosphorus: '',
@@ -46,13 +46,28 @@ const PredictForm = ({user}) => {
     }
   };
 
+  const handleBack = () => {
+    setShowPrediction(false);
+    setFormData({
+      nitrogen: '',
+      phosphorus: '',
+      potassium: '',
+      temperature: '',
+      humidity: '',
+      ph: '',
+      rainfall: '',
+    });
+    setPredictions([]);
+  };
+
+
 
 
   return (
     <>
       <DashboardHeader user={user} />
       <div className='predict-bg py-5'>
-        <Card className="p-4 shadow-sm" style={{ maxWidth: '500px', margin: '0 auto' }}>
+        <Card className="p-4 shadow-sm" style={{ maxWidth: '500px', margin: '30px auto' }}>
           <Form onSubmit={(e) => e.preventDefault()}>
             {[
               { label: 'Nitrogen', name: 'nitrogen' },
@@ -71,6 +86,7 @@ const PredictForm = ({user}) => {
                   step={input.step || 1}
                   value={formData[input.name]}
                   onChange={handleChange}
+                  disabled={showPrediction}
                   required
                 />
               </Form.Group>
@@ -91,12 +107,15 @@ const PredictForm = ({user}) => {
               {Predictions.map((crop, index) => (
                 <Col md={3} key={index}>
                   <Card className="h-100 shadow-sm crop-card">
-                    <Card.Img variant="top" src= {crop.image}
-                     height="150" 
-                     style={{ objectFit: 'cover' }} />
+                    <Card.Img variant="top" src={crop.image}
+                      height="250"
+                      style={{ objectFit: 'cover' }} />
                     <Card.Body>
                       <Card.Title>{crop.name}</Card.Title>
                       <Card.Text>{crop.description}</Card.Text>
+                      <span className="badge bg-success">
+                        Confidence: {Math.round(crop.confidence * 100)}%
+                      </span>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -120,7 +139,7 @@ const PredictForm = ({user}) => {
               {/* Go Back - primary green */}
               <button
                 className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded"
-                onClick={() => setShowPrediction(false)}
+                onClick={handleBack}
               >
                 Go Back
               </button>

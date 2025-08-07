@@ -6,7 +6,7 @@ const Contactus = () => {
     return (
         <>
             <Header />
-            <div className="container my-5 ">
+            <div className="container my-5 col-md-4">
                 <div className="card shadow">
                     <div className="card-body p-4" >
                         <h2 className="card-title">Email Sign Up Form</h2>
@@ -19,13 +19,10 @@ const Contactus = () => {
                             {/* Name */}
                             <div className="row mb-3">
                                 <label className="form-label fw-semibold">Name</label>
-                                <div className="col-md-4">
-                                    <input type="text" className="form-control" placeholder="Mr./Mrs./Ms." />
-                                </div>
-                                <div className="col-md-4">
+                                <div className="col-md-6">
                                     <input type="text" className="form-control" placeholder="First Name" />
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-6">
                                     <input type="text" className="form-control" placeholder="Last Name" />
                                 </div>
                             </div>
@@ -45,21 +42,18 @@ const Contactus = () => {
                             {/* Address */}
                             <div className="mb-3">
                                 <label className="form-label fw-semibold">Address</label>
-                                <input type="text" className="form-control mb-2" placeholder="Street Address" />
-                                <input type="text" className="form-control mb-2" placeholder="Street Address Line 2" />
                                 <div className="row">
-                                    <div className="col-md-6 mb-2">
+                                    <div className="col-md-4 mb-2">
                                         <input type="text" className="form-control" placeholder="City" />
                                     </div>
-                                    <div className="col-md-6 mb-2">
+                                    <div className="col-md-8 mb-2">
                                         <input type="text" className="form-control" placeholder="State / Province" />
                                     </div>
                                 </div>
-                                <input type="text" className="form-control" placeholder="Postal / Zip Code" />
                             </div>
 
                             {/* Comments */}
-                            <div className="mb-4">
+                            <div className="col-md-12 mb-3">
                                 <label className="form-label fw-semibold">Comments, Questions, or Suggestions</label>
                                 <textarea className="form-control" rows="4" placeholder="Your message..."></textarea>
                             </div>
