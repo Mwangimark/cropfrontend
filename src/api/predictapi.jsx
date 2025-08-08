@@ -57,6 +57,28 @@ export const getPastPredictions = async () => {
 };
 
 
+// contact us api
+export const contactUs = async (formData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/contact-us/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Contact Us API failed");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Contact Us Error:", error);
+    return null;
+  }
+}
+
 
 
 
