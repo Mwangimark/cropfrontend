@@ -8,6 +8,9 @@ import Predict from './pages/Predict';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute';
 import Contactus from './pages/Contactus';
+import MoreInfo from './pages/Moreinfo';
+import CropIdentity from './pages/CropIdentity';
+import CropInfo from './pages/CropInfo';
 
 
 function App() {
@@ -32,7 +35,10 @@ function App() {
       <Route path="/auth" element={<LoginSignupPage />} />
       <Route path='/dashboard' element={<ProtectedRoute>  <Dashboard user={user} /> </ProtectedRoute>} />
       <Route path='/predict' element={<ProtectedRoute> <Predict user = {user} /> </ProtectedRoute>} />
-      <Route path='/contact_us' element={<Contactus/>} />
+      <Route path='/contact_us' element={<ProtectedRoute> <Contactus user={user} /> </ProtectedRoute>} />
+      <Route path='/more_info' element={<ProtectedRoute> <MoreInfo user={user} /> </ProtectedRoute>} />
+      <Route path='/crops' element={<ProtectedRoute> <CropIdentity user={user} /> </ProtectedRoute>} />
+      <Route path='/cropinfo/:id' element={<ProtectedRoute> <CropInfo user={user} /> </ProtectedRoute>} />
     </Routes>
   );
 }

@@ -13,7 +13,7 @@ function Header() {
             width="200"
             height="50"
             className="d-inline-block align-top"
-            style={{ marginLeft: '17rem' }}
+            style={{ marginLeft: '7rem' }}
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -23,6 +23,7 @@ function Header() {
             <Nav.Link href="#services">Our Services</Nav.Link>
             <Nav.Link href="#about">About Us</Nav.Link>
             <Nav.Link as ={Link} to='/contact_us'>Contact Us</Nav.Link>
+            <Nav.Link as ={Link} to='/auth'>Login/Register</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

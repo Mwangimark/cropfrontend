@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import '../components/Dashboard.css';
+import '../components/cssFiles/Dashboard.css';
 import Footer from '../components/Footer';
 import DashboardHeader from '../components/DashboardHeader';
-import { getPastPredictions } from '../api/predictapi';
+import { deletePrediction, getPastPredictions } from '../api/predictapi';
 
 function Dashboard({ user }) {
     const [recommendations, setRecommendations] = useState([]);
-    console.log(user)
 
     useEffect(() => {
         async function fetchPredictions() {
@@ -27,14 +26,20 @@ function Dashboard({ user }) {
     }, []);
 
     const handleDeletePrediction = async (id) => {
+        const response = await deletePrediction(id);
+        if (response) {
+            setRecommendations(recommendations.filter(rec => rec.id !== id));
+        } else {
+            alert("Failed to delete prediction. Please try again.");
+        }
 
-    }
+    };
 
 
     return (
         <>
             <DashboardHeader user={user} />
-            <div className="dashboard-bg">
+            <div className="dashboard-bg d-flex flex-column min-vh-100">
                 <div className="btnpredict d-flex justify-content-end mb-2 ">
                     <button
                         style={{ marginRight: '20rem' }}
@@ -45,62 +50,68 @@ function Dashboard({ user }) {
                     </button>
                 </div>
 
-                <h4
-                    className="fw-bold ps-4 border-start border-3 border-light mb-4"
-                    style={{ color: 'white', marginLeft: '20rem' }}
-                >
-                    &nbsp;Recent Crop Predictions
-                </h4>
 
-                <Container fluid className="py-4 px-3 d-flex flex-column align-items-center">
-                    {recommendations.map((rec, idx) => (
-                        <div key={idx} className="prediction-section shadow-sm p-4 mb-5" style={{ width: '85%' }}>
-                            <Row className="g-4 mb-3">
-                                {rec.predicted_crops.map((crop, index) => (
-                                    <Col md={3} key={index}>
-                                        <Card className="h-100 shadow-sm crop-card">
-                                            <Card.Img
-                                                variant="top"
-                                                src={crop.image}
-                                                style={{
-                                                    height: '250px',    
-                                                    width: '100%',        
-                                                    objectFit: 'cover',      
-                                                    objectPosition: 'center' 
-                                                }}
-                                            />
-
+                <Container fluid className="py-4 px-3 d-flex flex-column container">
+                    <h4
+                        className="fw-bold ps-4 border-start border-3 border-light mb-4"
+                        style={{ color: 'white' }}
+                    >
+                        &nbsp;Recent Crop Predictions
+                    </h4>
+                    {recommendations.length === 0 ? (
+                        <div className="text-center text-light mt-5">
+                            <h4>No predictions made yet.</h4>
+                            <p>Click the <strong>Predict Crop</strong> button above to get started.</p>
+                        </div>
+                    ) : (
+                        recommendations.map((rec, idx) => (
+                            <div key={idx} className="prediction-section shadow-sm p-4 mb-5" >
+                                <Row className="g-4 mb-3">
+                                    {rec.predicted_crops.map((crop, index) => (
+                                        <Col md={3} key={index}>
+                                            <Card className="h-100 shadow-sm crop-card">
+                                                <Card.Img
+                                                    variant="top"
+                                                    src={crop.image}
+                                                    style={{
+                                                        height: '250px',
+                                                        width: '100%',
+                                                        objectFit: 'cover',
+                                                        objectPosition: 'center'
+                                                    }}
+                                                />
+                                                <Card.Body>
+                                                    <Card.Title>{crop.name}</Card.Title>
+                                                    <Card.Text>{crop.description}</Card.Text>
+                                                    <span className="badge bg-success">
+                                                        Confidence: {Math.round(crop.confidence * 100)}%
+                                                    </span>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                    <Col md={3}>
+                                        <Card className="h-100 shadow-sm input-card">
                                             <Card.Body>
-                                                <Card.Title>{crop.name}</Card.Title>
-                                                <Card.Text>{crop.description}</Card.Text>
-                                                <span className="badge bg-success">
-                                                    Confidence: {Math.round(crop.confidence * 100)}%
-                                                </span>
+                                                <Card.Title>User Input Summary</Card.Title>
+                                                <hr />
+                                                <p><strong>Nitrogen:</strong> {rec.nitrogen}</p>
+                                                <p><strong>Phosphorus:</strong> {rec.phosphorus}</p>
+                                                <p><strong>Potassium:</strong> {rec.potassium}</p>
+                                                <p><strong>Temperature:</strong> {rec.temperature} °C</p>
+                                                <p><strong>Humidity:</strong> {rec.humidity} %</p>
+                                                <p><strong>pH:</strong> {rec.ph}</p>
+                                                <p><strong>Rainfall:</strong> {rec.rainfall} mm</p>
                                             </Card.Body>
+                                            <button className='btn btn-outline-danger' onClick={() => handleDeletePrediction(rec.id)}>Delete</button>
                                         </Card>
                                     </Col>
-                                ))}
-
-                                <Col md={3}>
-                                    <Card className="h-100 shadow-sm input-card">
-                                        <Card.Body>
-                                            <Card.Title>User Input Summary</Card.Title>
-                                            <hr />
-                                            <p><strong>Nitrogen:</strong> {rec.nitrogen}</p>
-                                            <p><strong>Phosphorus:</strong> {rec.phosphorus}</p>
-                                            <p><strong>Potassium:</strong> {rec.potassium}</p>
-                                            <p><strong>Temperature:</strong> {rec.temperature} °C</p>
-                                            <p><strong>Humidity:</strong> {rec.humidity} %</p>
-                                            <p><strong>pH:</strong> {rec.ph}</p>
-                                            <p><strong>Rainfall:</strong> {rec.rainfall} mm</p>
-                                        </Card.Body>
-                                        <button className='btn btn-outline-danger' onClick={() => handleDeletePrediction(rec.id)}>Delete</button>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </div>
-                    ))}
+                                </Row>
+                            </div>
+                        ))
+                    )}
                 </Container>
+
 
                 <Footer />
             </div>

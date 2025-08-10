@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api'; // Adjust as per your backend
+export const API_BASE_URL = 'http://localhost:8000/api'; // Adjust as per your backend
 
 // Get token from localStorage or context if needed
-const getAuthHeaders = () => {
+export const getAuthHeaders = () => {
   const token = localStorage.getItem('access'); // assumes you stored JWT as accessToken
   return {
     headers: {
@@ -80,5 +80,44 @@ export const contactUs = async (formData) => {
 }
 
 
+// delete a prediction based on id
+export const deletePrediction = async (id) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/recommendations/${id}/`,getAuthHeaders());
+    return response // ✅ return the response data directly
+  } catch (error) {
+    console.error("Delete Prediction Error:", error.response?.data || error.message);
+    return null;
+  }
+};
 
+
+// get all soil_inputs descriptions
+export const getSoilInputsInfo = async () => {
+  try {
+    const headers = getAuthHeaders(); // already contains headers
+    const response = await axios.get(`${API_BASE_URL}/soil-inputs/`, headers);
+    return response.data; // ✅ return the response data directly
+  } catch (error) {
+    console.error("Soil Inputs Info Error:", error.response?.data || error.message);
+    return [];
+  }
+};
+
+
+// user updating his profile
+export const updateUserProfile = async (id, formData) => {
+  try {
+    const response = await axios.patch(`${API_BASE_URL}/users/${id}/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Update Profile Error:", error.response?.data || error.message);
+    return null;
+  }
+};
 

@@ -45,11 +45,11 @@ const Contactus = () => {
     return (
         <>
             <Header />
-            <div className="container my-5 col-md-4">
-                <div className="card shadow">
-                    <div className="card-body p-4">
-                        <h2 className="card-title">Email Sign Up Form</h2>
-                        <p className="text-muted">We would love to be in touch with you! Please sign up to receive emails from us!</p>
+            <div className="container my-5 col-md-4 rounded shadow" >
+                <div className="card shadow" style={{ marginTop: "5.5rem" }}>
+                    <div className="card-body" >
+                        <h2 className="card-title">Contact us Form</h2>
+                        <p className="text-muted">We would love to be in touch with you! Please fill out the form below to get in touch with us!</p>
                         <hr className="mb-4" />
 
                         {submitted ? (
