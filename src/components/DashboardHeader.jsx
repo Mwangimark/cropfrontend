@@ -38,7 +38,7 @@ const DashboardHeader = ({ user }) => {
                                     <Link to="/crops" className="nav-link text-white fw-semibold">Crops Identity</Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Link to="" className="nav-link text-white fw-semibold">Chat bot</Link>
+                                    <Link to="/chatbot" className="nav-link text-white fw-semibold">Chat bot</Link>
                                 </Nav.Item>
                             </Nav>
                         </Col>
