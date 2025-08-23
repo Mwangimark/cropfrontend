@@ -11,9 +11,9 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import "../components/cssFiles/Chatbot.css";
-import Footer from "../components/Footer";
+// import Footer from "../components/Footer";
 import { chatbotAPI } from "../api/chatbot.api";
-import DashboardHeader from "../components/DashboardHeader";
+// import DashboardHeader from "../components/DashboardHeader";
 
 function getSessionId() {
   let s = localStorage.getItem("chat_session_id");
@@ -78,8 +78,8 @@ const Chatbot = ({ user }) => {
 
   return (
     <>
-      <DashboardHeader user={user} />
-      <div className="container p-3" style={{ marginTop: "3.5rem", marginBottom: "3.5rem" }}>
+      {/* <DashboardHeader user={user} /> */}
+      <div className="container p-3" style={{ marginTop: "3.5rem" }}>
 
         <MDBContainer fluid className="py-5" style={{ backgroundColor: "#eee" }}>
           <MDBRow className="d-flex justify-content-center">
@@ -195,7 +195,7 @@ const Chatbot = ({ user }) => {
           </MDBRow>
         </MDBContainer>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </>
       );
 }

@@ -12,7 +12,6 @@ const ProfileModal = ({ isOpen, onClose, user, setUser }) => {
         phone: "",
         image: null
     });
-    console.log(user)
     useEffect(() => {
         if (user) {
             setFormData({
