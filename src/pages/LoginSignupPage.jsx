@@ -11,7 +11,7 @@ function LoginSignupPage({switchMode}) {
   return (
     <>
       <Header />
-      <div className="auth-wrapper">
+      <div className="auth-wrapper " style={{marginTop:"6rem"}}>
         <div className="auth-box">
           <h2 className="text-center">{activeForm === 'signup' ? 'SIGN UP' : 'LOGIN'}</h2>
           <div className="toggle-buttons">

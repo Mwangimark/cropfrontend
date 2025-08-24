@@ -21,3 +21,34 @@
   padding: 10px;
   min-height: 44px;
 }
+.about-hero {
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+  padding: 5rem 2rem;
+  border-radius: 15px;
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s ease-in-out;
+}
+
+.developer-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #218838;
+}
+
+.social-icons a {
+  color: #218838;
+  margin: 0 10px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #28a745;
+  transform: scale(1.2);
+}

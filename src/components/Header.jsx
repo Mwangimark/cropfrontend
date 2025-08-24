@@ -10,20 +10,18 @@ function Header() {
           <img
             alt="logo"
             src="images/logo.png"
-            width="200"
-            height="50"
-            className="d-inline-block align-top"
-            style={{ marginLeft: '7rem' }}
+            className="img-fluid"
+            style={{ maxWidth: "200px", height: "auto" }}
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto" style={{ marginRight: '17rem' }}>
-            <Nav.Link as ={Link} to='/'>Home</Nav.Link>
-            <Nav.Link href="#services">Our Services</Nav.Link>
-            <Nav.Link href="#about">About Us</Nav.Link>
-            <Nav.Link as ={Link} to='/contact_us'>Contact Us</Nav.Link>
-            <Nav.Link as ={Link} to='/auth'>Login/Register</Nav.Link>
+          <Nav className="ms-auto" style={{ marginRight: '5rem' }}>
+            <Nav.Link as={Link} to='/'>Home</Nav.Link>
+            <Nav.Link as={Link} to='/services'>Our Services</Nav.Link>
+            <Nav.Link as={Link} to='/about-us'>About Us</Nav.Link>
+            <Nav.Link as={Link} to='/contact_us'>Contact Us</Nav.Link>
+            <Nav.Link as={Link} to='/auth'>Login/Register</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
