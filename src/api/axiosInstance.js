@@ -1,6 +1,8 @@
 // api/axiosInstance.js
 import axios from 'axios';
 
+
+
 const baseURL = 'http://localhost:8000'; // Change to your Django backend
 
 const axiosInstance = axios.create({

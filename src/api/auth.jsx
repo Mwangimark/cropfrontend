@@ -1,10 +1,11 @@
 import axios from "axios";
 
-
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const registerUser = async (userData) => {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/users/', {
+
+        const response = await fetch(`${API_BASE_URL}/users/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,7 +29,7 @@ export const registerUser = async (userData) => {
 
 // login
 export const loginUser = async (formData) => {
-  const response = await axios.post('http://127.0.0.1:8000/api/token/', formData);
+  const response = await axios.post(`${API_BASE_URL}/token/`, formData);
   return response.data; 
 };
 
