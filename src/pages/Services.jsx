@@ -11,12 +11,12 @@ import {
 } from "react-icons/fa";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import cropImg from "../assets/tt.png";
-import weatherImg from "../assets/tt.png";
-import soilImg from "../assets/tt.png";
-import chatbotImg from "../assets/tt.png";
-import dashboardImg from "../assets/tt.png";
-import communityImg from "../assets/tt.png";
+import cropImg from "../assets/cropImg.png";
+import weatherImg from "../assets/weatherImg.png";
+import soilImg from "../assets/soilImg.png";
+import chatbotImg from "../assets/chatbotImg.png";
+import dashboardImg from "../assets/dashboardImg.png";
+import communityImg from "../assets/communityImg.png";
 
 const services = [
     {

@@ -1,7 +1,9 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import teamImg from "../assets/tt.png"; // project image placeholder
-import developerImg from "../assets/tt.png"; // your developer image
+import teamImg from "../assets/team.png"; // project image placeholder
+import choleraImg from "../assets/cholera.png"; 
+import visitorImg from "../assets/visitorImg.png"; 
+import developerImg from "../assets/me.png"; // your developer image
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { FaLinkedin, FaGithub, FaEnvelope, FaTwitter, FaPhone } from "react-icons/fa";
@@ -11,17 +13,20 @@ import { motion } from "framer-motion";
 
 const AboutUs = () => {
     const projects = [
-        {
-            title: "Companies Share Prediction",
+        {    
+            img : teamImg,
+            title: "Stock price prediction with time series",
             description: "AI-powered prediction system for company shares.",
-            link: "https://github.com/Mwangimark/CompaniesSharePrediction",
+            link: "https://github.com/Mwangimark/stock-price-prediction/blob/main/get_stock.ipynb",
         },
         {
+            img: choleraImg,
             title: "Cholera Outbreak Prediction",
             description: "ML model predicting cholera outbreaks using health & environmental data.",
-            link: "https://github.com/Mwangimark/CholeraPrediction",
+            link: "https://www.kaggle.com/code/markcosmars/cholera-outbreak-prediction",
         },
         {
+            img: visitorImg,
             title: "Visitors Management Gate",
             description: "Django system managing visitors efficiently.",
             link: "https://github.com/Mwangimark/VisitorGate",
@@ -41,7 +46,7 @@ const AboutUs = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginTop:"2.5rem"
+                    marginTop: "2.5rem"
                 }}
             >
                 <motion.div
@@ -60,8 +65,8 @@ const AboutUs = () => {
                         style={{ maxWidth: "700px", margin: "0 auto" }}
                     >
                         <strong>Smart AgriFit</strong>,is revolutionizing agriculture with data-driven insights.
-                                We empower farmers to make informed decisions, improve crop yields, and
-                                embrace modern farming technology.
+                        We empower farmers to make informed decisions, improve crop yields, and
+                        embrace modern farming technology.
                     </motion.p>
                     <Button
                         variant="light"
@@ -112,7 +117,7 @@ const AboutUs = () => {
                     {projects.map((project, idx) => (
                         <Col md={4} className="mb-4" key={idx}>
                             <Card className="h-100 shadow-sm border-0 text-center project-card">
-                                <Card.Img variant="top" src={teamImg} />
+                                <Card.Img variant="top" src={project.img} />
                                 <Card.Body>
                                     <Card.Title>{project.title}</Card.Title>
                                     <Card.Text>{project.description}</Card.Text>
@@ -126,56 +131,71 @@ const AboutUs = () => {
 
             {/* Developer Section */}
             <Container className="my-5">
-                <div className="p-4 border rounded shadow text-center bg-light">
-                    <h2 className="mb-3">About the Developer & Co-Founder</h2>
-                    <img
-                        src={developerImg}
-                        alt="Mark Mwangi"
-                        className="developer-img my-3 rounded-circle shadow"
-                        style={{ width: "150px", height: "150px", objectFit: "cover" }}
-                    />
-                    <p className="lead">
-                        Hi, I’m <strong>Mark Mwangi</strong>. Passionate about building intelligent
-                        solutions in agriculture and technology.
-                    </p>
+                <h2 className="mb-4 text-center">About the Developer & Co-Founder</h2>
 
-                    {/* Social Media */}
-                    <div className="social-icons my-3 d-flex justify-content-center gap-3">
-                        <a href="https://www.linkedin.com/in/markmwangi" target="_blank" rel="noreferrer">
-                            <FaLinkedin size={30} />
-                        </a>
-                        <a href="https://github.com/Mwangimark" target="_blank" rel="noreferrer">
-                            <FaGithub size={30} />
-                        </a>
-                        <a href="https://twitter.com/mark" target="_blank" rel="noreferrer">
-                            <FaTwitter size={30} />
-                        </a>
-                    </div>
+                <div className="p-4 border rounded shadow bg-light">
+                    <Row className="align-items-center g-5">
+                        {/* Left Column */}
+                        <Col md={6} className="text-center mb-4 mb-md-0">
+                            <img
+                                src={developerImg}
+                                alt="Mark Mwangi"
+                                className="developer-img rounded-circle shadow mb-3"
+                                style={{ width: "180px", height: "180px", objectFit: "cover" }}
+                            />
+                            <p className="lead">
+                                Hi, I’m <strong>Mark Mwangi</strong>. Passionate about building intelligent
+                                solutions in agriculture and technology.
+                            </p>
+                        </Col>
 
-                    {/* Portfolio Link */}
-                    <div className="my-3">
-                        <Button variant="outline-success" href="https://yourportfolio.com" target="_blank">
-                            View My Portfolio
-                        </Button>
-                    </div>
+                        {/* Right Column */}
+                        <Col md={6} className="text-center text-md-start">
+                            {/* Contact Info */}
+                            <div className="my-3">
+                                <p>
+                                    <FaEnvelope className="me-2 text-success" />
+                                    Email:{" "}
+                                    <a href="mailto:markcosmars2000@gmail.com">
+                                        markcosmars2000@gmail.com
+                                    </a>
+                                </p>
+                                <p>
+                                    <FaPhone className="me-2 text-success" />
+                                    Contact:{" "}
+                                    <a href="tel:+254740466295">+254 740 466 295</a>
+                                </p>
+                            </div>
 
-                    {/* Contact Info */}
-                    <div className="d-flex flex-column align-items-center my-3">
-                        <p>
-                            <FaEnvelope className="me-2 text-success" />
-                            Email: <a href="mailto:markcosmars2000@gmail.com">markcosmars2000@gmail.com</a>
-                        </p>
-                        <p>
-                            <FaPhone className="me-2 text-success" />
-                            Contact: <a href="tel:+254740466295">+254 740 466 295</a>
-                        </p>
-                    </div>
+                            {/* Social Media */}
+                            <div className="social-icons my-3 d-flex justify-content-md-start justify-content-center gap-3">
+                                <a href="https://www.linkedin.com/in/markmwangi" target="_blank" rel="noreferrer">
+                                    <FaLinkedin size={30} />
+                                </a>
+                                <a href="https://github.com/Mwangimark" target="_blank" rel="noreferrer">
+                                    <FaGithub size={30} />
+                                </a>
+                                <a href="https://twitter.com/mark" target="_blank" rel="noreferrer">
+                                    <FaTwitter size={30} />
+                                </a>
+                            </div>
 
-                    <Button variant="success" size="lg">
-                        Contact Me
-                    </Button>
+                            {/* Buttons */}
+                            <div className="d-flex flex-column flex-md-row gap-3 mt-4">
+                                <Button
+                                    variant="outline-success"
+                                    href="https://deployed-portfolio-eta.vercel.app/"
+                                    target="_blank"
+                                >
+                                    View My Portfolio
+                                </Button>
+                                <Button variant="success">Contact Me</Button>
+                            </div>
+                        </Col>
+                    </Row>
                 </div>
             </Container>
+
             <Footer />
         </>
     );
