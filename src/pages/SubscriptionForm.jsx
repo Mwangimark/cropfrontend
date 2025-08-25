@@ -44,7 +44,7 @@ const SubscriptionForm = ({ onSubscriptionActive }) => {
       elapsed += intervalTime;
 
       try {
-        const statusRes = await axios.get("/api/subscription-status/", {
+        const statusRes = await axios.get( `${process.env.REACT_APP_API_BASE_URL}/subscription-status/`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("access")}` },
         });
 

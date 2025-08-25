@@ -52,7 +52,7 @@ export const makingPaymentsstk = async (phone) => {
       },
       body: JSON.stringify({ phone }),
     });
-
+    console.log(response)
     if (!response.ok) {
       throw new Error("Failed to initiate payment. Try again.");
     }

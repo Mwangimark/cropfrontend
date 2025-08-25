@@ -39,7 +39,7 @@ function App() {
       <Route path="/auth" element={<LoginSignupPage />} />
       <Route path='/dashboard' element={<ProtectedRoute>  <Dashboard user={user} /> </ProtectedRoute>} />
       <Route path='/predict' element={<ProtectedRoute> <Predict user={user} /> </ProtectedRoute>} />
-      <Route path='/contact_us' element={<ProtectedRoute> <Contactus user={user} /> </ProtectedRoute>} />
+      <Route path='/contact_us' element={<Contactus user={user} />} />
       <Route path='/more_info' element={<ProtectedRoute> <MoreInfo user={user} /> </ProtectedRoute>} />
       <Route path='/crops' element={<ProtectedRoute> <CropIdentity user={user} /> </ProtectedRoute>} />
       <Route path='/cropinfo/:id' element={<ProtectedRoute> <CropInfo user={user} /> </ProtectedRoute>} />
