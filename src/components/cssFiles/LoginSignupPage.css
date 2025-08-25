@@ -1,5 +1,5 @@
 .auth-wrapper {
-  background-image: url("/home/mark/Zynamis/cropfrontend/src/assets/farm-bg.png");
+  background-image: url("../../assets/farm-bg.png");
   background-size: cover;
   background-position:center;
   height: 90vh;

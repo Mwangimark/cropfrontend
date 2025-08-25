@@ -1,6 +1,6 @@
 /* Dashboard.css */
 .dashboard-bg {
-  background-image: url('/home/mark/Zynamis/cropfrontend/src/assets/tt.png');
+  background-image: url('../../assets/tt.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -16,7 +16,7 @@
 
 
 .predict-bg{
-  background-image: url('/home/mark/Zynamis/cropfrontend/src/assets/mt.png');
+  background-image: url('../../assets/mt.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
