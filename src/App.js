@@ -39,14 +39,13 @@ function App() {
       <Route path="/auth" element={<LoginSignupPage />} />
       <Route path='/dashboard' element={<ProtectedRoute>  <Dashboard user={user} /> </ProtectedRoute>} />
       <Route path='/predict' element={<ProtectedRoute> <Predict user={user} /> </ProtectedRoute>} />
-      <Route path='/contact_us' element={<Contactus user={user} />} />
       <Route path='/more_info' element={<ProtectedRoute> <MoreInfo user={user} /> </ProtectedRoute>} />
       <Route path='/crops' element={<ProtectedRoute> <CropIdentity user={user} /> </ProtectedRoute>} />
       <Route path='/cropinfo/:id' element={<ProtectedRoute> <CropInfo user={user} /> </ProtectedRoute>} />
       <Route path='/chatbot' element={<ProtectedRoute> <ChatbotWithSubscription user={user} /> </ProtectedRoute>} />
       <Route path='/about-us' element={<AboutUs />} />
       <Route path='/services' element={<Services />} />
-
+      <Route path='/contact_us' element={<Contactus/>} />
 
     </Routes>
   );
