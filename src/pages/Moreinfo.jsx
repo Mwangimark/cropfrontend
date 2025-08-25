@@ -1,5 +1,5 @@
 import React, { use, useState } from 'react';
-import '/home/mark/Zynamis/cropfrontend/src/components/cssFiles/Moreinfo.scss'
+import '../components/cssFiles/Moreinfo.scss'
 import DashboardHeader from '../components/DashboardHeader';
 import Footer from '../components/Footer';
 import { useEffect } from 'react';
