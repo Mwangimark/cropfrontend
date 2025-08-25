@@ -11,9 +11,7 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import "../components/cssFiles/Chatbot.css";
-// import Footer from "../components/Footer";
 import { chatbotAPI } from "../api/chatbot.api";
-// import DashboardHeader from "../components/DashboardHeader";
 
 function getSessionId() {
   let s = localStorage.getItem("chat_session_id");

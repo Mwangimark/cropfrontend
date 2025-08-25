@@ -184,7 +184,7 @@ const AboutUs = () => {
                             <div className="d-flex flex-column flex-md-row gap-3 mt-4">
                                 <Button
                                     variant="outline-success"
-                                    href="https://deployed-portfolio-eta.vercel.app/"
+                                    href="https://mwangiportfolio-two.vercel.app/"
                                     target="_blank"
                                 >
                                     View My Portfolio
