@@ -1,102 +1,110 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Dropdown, Nav } from 'react-bootstrap';
+import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import ProfileModal from '../pages/ProfileModal';
 
 const DashboardHeader = ({ user }) => {
-    const navigate = useNavigate();
-    const [showProfile, setShowProfile] = useState(false);
+  const navigate = useNavigate();
+  const [showProfile, setShowProfile] = useState(false);
 
-    return (
-        <>
-            <header className="bg-success text-white py-2 shadow-sm fixed-top">
-                <Container fluid>
-                    <Row className="align-items-center justify-content-between px-3">
-
-                        {/* Logo */}
-                        <Col xs={12} md="auto" className="text-center text-md-start mb-2 mb-md-0">
-                            <img
-                                src="/assets/logo.png"
-                                alt="logo"
-                                width="200"
-                                height="50"
-                                className="d-inline-block align-top"
-                            />
-                        </Col>
-
-                        {/* Navigation Links */}
-                        <Col xs={12} md className="text-center mb-2 mb-md-0">
-                            <Nav className="justify-content-center justify-content-md-end">
-                                <Nav.Item>
-                                    <Link to="/dashboard" className="nav-link text-white fw-semibold">Home</Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Link to="/more_info" className="nav-link text-white fw-semibold">More Info</Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Link to="/crops" className="nav-link text-white fw-semibold">Crops Identity</Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Link to="/chatbot" className="nav-link text-white fw-semibold">Chat bot</Link>
-                                </Nav.Item>
-                            </Nav>
-                        </Col>
-
-                        {/* User Dropdown */}
-                        <Col xs={12} md="auto" className="text-center text-md-end">
-                            <Dropdown align="end">
-                                <Dropdown.Toggle
-                                    variant="outline-primary"
-                                    className="d-flex align-items-center gap-2 px-3 py-2 rounded-pill shadow-sm mx-auto mx-md-0"
-                                    style={{ backgroundColor: '#f8f9fa', border: '1px solid #ccc' }}
-                                >
-                                    {user?.image ? (
-                                        <img
-                                            src={user.image}
-                                            alt="Profile"
-                                            className="rounded-circle"
-                                            style={{
-                                                width: 28,
-                                                height: 28,
-                                                objectFit: "cover",
-                                            }}
-                                        />
-                                    ) : (
-                                        <FaUserCircle size={24} />
-                                    )}
-                                    <span className="fw-medium">{user?.name}</span>
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu className="shadow-sm">
-                                    <Dropdown.Item onClick={() => setShowProfile(true)}>Profile</Dropdown.Item>
-                                    <Dropdown.Item>Settings</Dropdown.Item>
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item
-                                        className="text-danger"
-                                        onClick={() => {
-                                            localStorage.removeItem('token'); 
-                                            sessionStorage.removeItem('token'); 
-                                
-                                            navigate('/auth');
-                                        }}
-                                    >
-                                        Logout
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </Col>
-
-                    </Row>
-                </Container>
-            </header>
-            <ProfileModal
-                isOpen={showProfile}
-                onClose={() => setShowProfile(false)}
-                user={user}
+  return (
+    <>
+      <Navbar
+        expand="md"
+        bg="success"
+        variant="dark"
+        fixed="top"
+        className="shadow-sm"
+      >
+        <Container fluid>
+          {/* Logo */}
+          <Navbar.Brand as={Link} to="/dashboard">
+            <img
+              src="/assets/logo.png"
+              alt="logo"
+              width="160"
+              height="40"
+              className="d-inline-block align-top"
             />
-        </>
-    );
+          </Navbar.Brand>
+
+          {/* Hamburger toggle for mobile */}
+          <Navbar.Toggle aria-controls="main-navbar" />
+
+          {/* Collapsible menu */}
+          <Navbar.Collapse id="main-navbar" className="justify-content-between">
+            {/* Navigation Links */}
+            <Nav className="mx-auto text-center">
+              <Nav.Link as={Link} to="/dashboard" className="fw-semibold">
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/more_info" className="fw-semibold">
+                More Info
+              </Nav.Link>
+              <Nav.Link as={Link} to="/crops" className="fw-semibold">
+                Crops Identity
+              </Nav.Link>
+              <Nav.Link as={Link} to="/chatbot" className="fw-semibold">
+                Chat bot
+              </Nav.Link>
+            </Nav>
+
+            {/* User Dropdown */}
+            <Dropdown align="end">
+              <Dropdown.Toggle
+                variant="light"
+                className="d-flex align-items-center gap-2 px-3 py-2 rounded-pill shadow-sm"
+              >
+                {user?.image ? (
+                  <img
+                    src={user.image}
+                    alt="Profile"
+                    className="rounded-circle"
+                    style={{
+                      width: 28,
+                      height: 28,
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <FaUserCircle size={24} />
+                )}
+                <span className="fw-medium d-none d-sm-inline">
+                  {user?.name}
+                </span>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className="shadow-sm">
+                <Dropdown.Item onClick={() => setShowProfile(true)}>
+                  Profile
+                </Dropdown.Item>
+                <Dropdown.Item>Settings</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  className="text-danger"
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    sessionStorage.removeItem("token");
+                    navigate("/auth");
+                  }}
+                >
+                  Logout
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
+      {/* Profile Modal */}
+      <ProfileModal
+        isOpen={showProfile}
+        onClose={() => setShowProfile(false)}
+        user={user}
+      />
+    </>
+  );
 };
 
 export default DashboardHeader;
