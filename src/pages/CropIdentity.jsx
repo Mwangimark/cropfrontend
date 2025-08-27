@@ -16,6 +16,7 @@ const CropIdentity = ({ user }) => {
             if (response) {
                 setCrops(response);
                 setFilteredCrops(response); // ✅ show all crops initially
+                console.log(response)
             } else {
                 console.error("Failed to fetch crops data");
             }
@@ -59,7 +60,7 @@ const CropIdentity = ({ user }) => {
                                     <div style={{ height: '200px', overflow: 'hidden' }}>
                                         <img
                                             className="card-img-top"
-                                            src={item.image}
+                                            src={item.image_path}
                                             alt={item.name}
                                             style={{ height: '100%', width: '100%', objectFit: 'cover' }}
                                         />
