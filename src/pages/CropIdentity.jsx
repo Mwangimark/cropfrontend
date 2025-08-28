@@ -60,7 +60,7 @@ const CropIdentity = ({ user }) => {
                                     <div style={{ height: '200px', overflow: 'hidden' }}>
                                         <img
                                             className="card-img-top"
-                                            src={item.image_path}
+                                            src={item.image_url}
                                             alt={item.name}
                                             style={{ height: '100%', width: '100%', objectFit: 'cover' }}
                                         />
