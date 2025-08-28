@@ -45,6 +45,7 @@ const PredictForm = ({ user }) => {
         setPredictions(result.predicted_crops); // note the variable is capitalized incorrectly now
         setShowPrediction(true);
         setLoading(false);
+        console.log(result)
       } else {
         alert("Prediction failed. Please try again.");
       }
@@ -120,7 +121,7 @@ const PredictForm = ({ user }) => {
                   <Card className="h-100 shadow-sm crop-card">
                     <Card.Img
                       variant="top"
-                      src={crop.image}
+                      src={crop.image_url}
                       height="250"
                       style={{ objectFit: 'cover' }}
                     />
