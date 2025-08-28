@@ -26,7 +26,7 @@ const CropInfo = ({ user }) => {
                 <div className="card mb-3 p-3" style={{ width: '140vh' }}>
                     <div className="row g-0">
                         <div className="col-md-4">
-                            <img src={crop?.image} className="img-fluid rounded-start" alt={crop?.name}
+                            <img src={crop?.image_url} className="img-fluid rounded-start" alt={crop?.name}
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         </div>
                         <div className="col-md-8">
