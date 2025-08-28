@@ -120,7 +120,7 @@ const PredictForm = ({ user }) => {
                   <Card className="h-100 shadow-sm crop-card">
                     <Card.Img
                       variant="top"
-                      src={crop.image}
+                      src={crop.image_url}
                       height="250"
                       style={{ objectFit: 'cover' }}
                     />

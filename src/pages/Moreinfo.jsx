@@ -48,7 +48,7 @@ const MoreInfo = ({ user }) => {
                 <a className="postcard__img_link" href="#">
                   <img
                     className="postcard__img"
-                    src={nutrient.photo_url}
+                    src={nutrient.image_url}
                     alt={nutrient.name}
                   />
                 </a>
