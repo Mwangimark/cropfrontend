@@ -37,7 +37,7 @@ const PredictForm = ({ user }) => {
 
   const handlePredict = async () => {
     try {
-      setUserInputs({ ...formData }); // ✅ Capture inputs first
+      setUserInputs({ ...formData }); 
       setLoading(true);
       const result = await predictCrops(formData);
 
@@ -45,7 +45,6 @@ const PredictForm = ({ user }) => {
         setPredictions(result.predicted_crops); // note the variable is capitalized incorrectly now
         setShowPrediction(true);
         setLoading(false);
-        console.log(result)
       } else {
         alert("Prediction failed. Please try again.");
       }

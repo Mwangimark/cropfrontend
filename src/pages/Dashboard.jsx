@@ -72,7 +72,7 @@ function Dashboard({ user }) {
                                             <Card className="h-100 shadow-sm crop-card">
                                                 <Card.Img
                                                     variant="top"
-                                                    src={crop.image}
+                                                    src={crop.image_url}
                                                     style={{
                                                         height: '250px',
                                                         width: '100%',
