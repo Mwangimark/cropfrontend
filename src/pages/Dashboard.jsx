@@ -37,28 +37,35 @@ function Dashboard({ user }) {
     return (
         <>
             <DashboardHeader user={user} />
-            <div className="dashboard-bg d-flex flex-column min-vh-100">
-                <div className="btnpredict d-flex justify-content-end mb-2 ">
-                    <button
-                        style={{ marginRight: '20rem',color:'black' }}
-                        className="btn btn-success px-4 py-2 rounded-pill mt-2"
-                        onClick={() => window.location.href = "/predict"}
-                    >
-                        Predict Crop
-                    </button>
-                </div>
-
+            <div
+                className="dashboard-bg d-flex flex-column min-vh-100"
+                style={{ marginTop: "4.05rem" }}
+            >
                 <Container fluid className="py-4 px-3 d-flex flex-column container">
-                    <h4
-                        className="fw-bold ps-4 border-start border-3 border-light mb-4"
-                        style={{ color: 'black' }}
-                    >
-                        &nbsp;Recent Crop Predictions
-                    </h4>
+                    {/* Header Row with Title + Button */}
+                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+                        <h4
+                            className="fw-bold ps-4 border-start border-3 border-light mb-3 mb-md-0"
+                            style={{ color: 'black' }}
+                        >
+                            &nbsp;Recent Crop Predictions
+                        </h4>
+
+                        <button
+                            className="btn btn-success px-4 py-2 rounded-pill"
+                            onClick={() => (window.location.href = '/predict')}
+                        >
+                            Predict Crop
+                        </button>
+                    </div>
+
+                    {/* Predictions */}
                     {recommendations.length === 0 ? (
                         <div className="text-center text-light mt-5">
                             <h4>No predictions made yet.</h4>
-                            <p>Click the <strong>Predict Crop</strong> button above to get started.</p>
+                            <p>
+                                Click the <strong>Predict Crop</strong> button above to get started.
+                            </p>
                         </div>
                     ) : (
                         recommendations.map((rec, idx) => (
@@ -67,10 +74,10 @@ function Dashboard({ user }) {
                                     {rec.predicted_crops.map((crop, index) => (
                                         <Col
                                             key={index}
-                                            xs={6}   // 2 per row on very small phones
-                                            sm={4}   // 3 per row on small phones
-                                            md={3}   // 4 per row on tablets and up
-                                            lg={3}   // 4 per row on laptops/desktops
+                                            xs={6}
+                                            sm={4}
+                                            md={3}
+                                            lg={3}
                                         >
                                             <CropCard crop={crop} />
                                         </Col>
@@ -102,9 +109,11 @@ function Dashboard({ user }) {
                         ))
                     )}
                 </Container>
-
-                <Footer />
             </div>
+
+
+            <Footer />
+
         </>
     );
 }
@@ -157,42 +166,42 @@ const CropCard = ({ crop }) => {
             : crop.description;
 
     return (
-<Card className="h-100 shadow-sm crop-card">
-    <Card.Img
-        variant="top"
-        src={crop.image_url}
-        style={{
-            height: '250px',
-            width: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center',
-        }}
-    />
-    <Card.Body className="d-flex flex-column">
-        <div>
-            <Card.Title>{crop.name}</Card.Title>
-            <Card.Text>
-                {expanded ? crop.description : shortText}
-            </Card.Text>
-            {crop.description && crop.description.length > 60 && (
-                <button
-                    className="btn btn-link p-0"
-                    style={{ fontSize: '0.9rem' }}
-                    onClick={() => setExpanded(!expanded)}
-                >
-                    {expanded ? "Read Less" : "Read More"}
-                </button>
-            )}
-        </div>
+        <Card className="h-100 shadow-sm crop-card">
+            <Card.Img
+                variant="top"
+                src={crop.image_url}
+                style={{
+                    height: '250px',
+                    width: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                }}
+            />
+            <Card.Body className="d-flex flex-column">
+                <div>
+                    <Card.Title>{crop.name}</Card.Title>
+                    <Card.Text>
+                        {expanded ? crop.description : shortText}
+                    </Card.Text>
+                    {crop.description && crop.description.length > 60 && (
+                        <button
+                            className="btn btn-link p-0"
+                            style={{ fontSize: '0.9rem' }}
+                            onClick={() => setExpanded(!expanded)}
+                        >
+                            {expanded ? "Read Less" : "Read More"}
+                        </button>
+                    )}
+                </div>
 
-        {/* This part stays pinned at bottom */}
-        <div className="mt-auto">
-            <span className="badge bg-success d-block mt-2">
-                Confidence: {Math.round(crop.confidence * 100)}%
-            </span>
-        </div>
-    </Card.Body>
-</Card>
+                {/* This part stays pinned at bottom */}
+                <div className="mt-auto">
+                    <span className="badge bg-success d-block mt-2">
+                        Confidence: {Math.round(crop.confidence * 100)}%
+                    </span>
+                </div>
+            </Card.Body>
+        </Card>
 
     );
 };
