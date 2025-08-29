@@ -1,11 +1,11 @@
 /* Dashboard.css */
 .dashboard-bg {
-  background-image: url('../../assets/tt.png');
+  /* background-image: url('../../assets/tt.png'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
-  color: white;
+  color: rgb(10, 10, 10);
 }
 
 .prediction-section {
@@ -24,10 +24,10 @@
   color: rgb(5, 5, 5);
 }
 
-.card-right-align {
+/* .card-right-align {
   margin-left: auto;
   margin-right: 20rem;
-}
+} */
 
 .btnpredict{
   margin-top: 4.05rem;

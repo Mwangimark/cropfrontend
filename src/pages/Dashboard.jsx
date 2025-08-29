@@ -32,9 +32,7 @@ function Dashboard({ user }) {
         } else {
             alert("Failed to delete prediction. Please try again.");
         }
-
     };
-
 
     return (
         <>
@@ -42,7 +40,7 @@ function Dashboard({ user }) {
             <div className="dashboard-bg d-flex flex-column min-vh-100">
                 <div className="btnpredict d-flex justify-content-end mb-2 ">
                     <button
-                        style={{ marginRight: '20rem' }}
+                        style={{ marginRight: '20rem',color:'black' }}
                         className="btn btn-success px-4 py-2 rounded-pill mt-2"
                         onClick={() => window.location.href = "/predict"}
                     >
@@ -50,11 +48,10 @@ function Dashboard({ user }) {
                     </button>
                 </div>
 
-
                 <Container fluid className="py-4 px-3 d-flex flex-column container">
                     <h4
                         className="fw-bold ps-4 border-start border-3 border-light mb-4"
-                        style={{ color: 'white' }}
+                        style={{ color: 'black' }}
                     >
                         &nbsp;Recent Crop Predictions
                     </h4>
@@ -65,32 +62,21 @@ function Dashboard({ user }) {
                         </div>
                     ) : (
                         recommendations.map((rec, idx) => (
-                            <div key={idx} className="prediction-section shadow-sm p-4 mb-5" >
+                            <div key={idx} className="prediction-section shadow-sm p-4 mb-5">
                                 <Row className="g-4 mb-3">
                                     {rec.predicted_crops.map((crop, index) => (
-                                        <Col md={3} key={index}>
-                                            <Card className="h-100 shadow-sm crop-card">
-                                                <Card.Img
-                                                    variant="top"
-                                                    src={crop.image_url}
-                                                    style={{
-                                                        height: '250px',
-                                                        width: '100%',
-                                                        objectFit: 'cover',
-                                                        objectPosition: 'center'
-                                                    }}
-                                                />
-                                                <Card.Body>
-                                                    <Card.Title>{crop.name}</Card.Title>
-                                                    <Card.Text>{crop.description}</Card.Text>
-                                                    <span className="badge bg-success">
-                                                        Confidence: {Math.round(crop.confidence * 100)}%
-                                                    </span>
-                                                </Card.Body>
-                                            </Card>
+                                        <Col
+                                            key={index}
+                                            xs={6}   // 2 per row on very small phones
+                                            sm={4}   // 3 per row on small phones
+                                            md={3}   // 4 per row on tablets and up
+                                            lg={3}   // 4 per row on laptops/desktops
+                                        >
+                                            <CropCard crop={crop} />
                                         </Col>
                                     ))}
-                                    <Col md={3}>
+
+                                    <Col xs={6} sm={4} md={3} lg={3}>
                                         <Card className="h-100 shadow-sm input-card">
                                             <Card.Body>
                                                 <Card.Title>User Input Summary</Card.Title>
@@ -103,7 +89,12 @@ function Dashboard({ user }) {
                                                 <p><strong>pH:</strong> {rec.ph}</p>
                                                 <p><strong>Rainfall:</strong> {rec.rainfall} mm</p>
                                             </Card.Body>
-                                            <button className='btn btn-outline-danger' onClick={() => handleDeletePrediction(rec.id)}>Delete</button>
+                                            <button
+                                                className="btn btn-outline-danger"
+                                                onClick={() => handleDeletePrediction(rec.id)}
+                                            >
+                                                Delete
+                                            </button>
                                         </Card>
                                     </Col>
                                 </Row>
@@ -112,11 +103,98 @@ function Dashboard({ user }) {
                     )}
                 </Container>
 
-
                 <Footer />
             </div>
         </>
     );
 }
+
+/**
+ * CropCard component
+ * - On phones (<768px): show short description with "Read More / Less"
+ * - On tablets/laptops (≥768px): show full description always
+ */
+const CropCard = ({ crop }) => {
+    const [expanded, setExpanded] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768); // phone breakpoint
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    // Always show full description on tablet/laptop
+    if (!isMobile) {
+        return (
+            <Card className="h-100 shadow-sm crop-card">
+                <Card.Img
+                    variant="top"
+                    src={crop.image_url}
+                    style={{
+                        height: '250px',
+                        width: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                    }}
+                />
+                <Card.Body>
+                    <Card.Title>{crop.name}</Card.Title>
+                    <Card.Text>{crop.description}</Card.Text>
+                    <span className="badge bg-success d-block mt-2">
+                        Confidence: {Math.round(crop.confidence * 100)}%
+                    </span>
+                </Card.Body>
+            </Card>
+        );
+    }
+
+    // On phones → show Read More / Less
+    const shortText =
+        crop.description && crop.description.length > 60
+            ? crop.description.substring(0, 60) + "..."
+            : crop.description;
+
+    return (
+<Card className="h-100 shadow-sm crop-card">
+    <Card.Img
+        variant="top"
+        src={crop.image_url}
+        style={{
+            height: '250px',
+            width: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+        }}
+    />
+    <Card.Body className="d-flex flex-column">
+        <div>
+            <Card.Title>{crop.name}</Card.Title>
+            <Card.Text>
+                {expanded ? crop.description : shortText}
+            </Card.Text>
+            {crop.description && crop.description.length > 60 && (
+                <button
+                    className="btn btn-link p-0"
+                    style={{ fontSize: '0.9rem' }}
+                    onClick={() => setExpanded(!expanded)}
+                >
+                    {expanded ? "Read Less" : "Read More"}
+                </button>
+            )}
+        </div>
+
+        {/* This part stays pinned at bottom */}
+        <div className="mt-auto">
+            <span className="badge bg-success d-block mt-2">
+                Confidence: {Math.round(crop.confidence * 100)}%
+            </span>
+        </div>
+    </Card.Body>
+</Card>
+
+    );
+};
 
 export default Dashboard;

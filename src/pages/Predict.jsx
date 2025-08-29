@@ -19,17 +19,8 @@ const PredictForm = ({ user }) => {
   });
 
   const [showPrediction, setShowPrediction] = useState(false);
-  const [Predictions, setPredictions] = useState([]);
-  const [userInputs, setUserInputs] = useState({
-    nitrogen: '',
-    phosphorus: '',
-    potassium: '',
-    temperature: '',
-    humidity: '',
-    ph: '',
-    rainfall: '',
-  });
-
+  const [predictions, setPredictions] = useState([]);
+  const [userInputs, setUserInputs] = useState({ ...formData });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,14 +28,13 @@ const PredictForm = ({ user }) => {
 
   const handlePredict = async () => {
     try {
-      setUserInputs({ ...formData }); 
+      setUserInputs({ ...formData });
       setLoading(true);
       const result = await predictCrops(formData);
 
       if (result && result.predicted_crops) {
-        setPredictions(result.predicted_crops); // note the variable is capitalized incorrectly now
+        setPredictions(result.predicted_crops);
         setShowPrediction(true);
-        setLoading(false);
       } else {
         alert("Prediction failed. Please try again.");
       }
@@ -54,7 +44,6 @@ const PredictForm = ({ user }) => {
     } finally {
       setLoading(false);
     }
-
   };
 
   const handleBack = () => {
@@ -63,10 +52,10 @@ const PredictForm = ({ user }) => {
       nitrogen: '',
       phosphorus: '',
       potassium: '',
-      temperature: '',
-      humidity: '',
       ph: '',
       rainfall: '',
+      temperature: '',
+      humidity: '',
     });
     setPredictions([]);
   };
@@ -75,8 +64,9 @@ const PredictForm = ({ user }) => {
     <>
       <DashboardHeader user={user} />
       <h2 className="text-center mt-4">Crop Prediction</h2>
-      <div className='predict-bg py-2'>
-        <Card className="p-4 shadow-sm" style={{ maxWidth: '500px', margin: '0px auto' }}>
+      <div className="predict-bg py-2">
+        {/* Input Form */}
+        <Card className="p-4 shadow-sm" style={{ maxWidth: '500px', margin: '0 auto' }}>
           <Form onSubmit={(e) => e.preventDefault()}>
             {[
               { label: 'Nitrogen', name: 'nitrogen' },
@@ -105,38 +95,30 @@ const PredictForm = ({ user }) => {
               <Button type="submit" variant="success" onClick={handlePredict}>
                 Predict
               </Button>
-              {loading && <><h5> Please hold on .... Predicting in action </h5><Loading /></>}
+              {loading && (
+                <>
+                  <h5 className="mt-3">Please hold on... Prediction in progress</h5>
+                  <Loading />
+                </>
+              )}
             </div>
           </Form>
         </Card>
 
+        {/* Predictions */}
         {showPrediction && (
           <div className="mt-5 container">
             <h4 className="text-center mb-4">Prediction Results</h4>
-            <Row className="g-4 flex-column flex-md-row"> {/* Stack on xs/sm, row on md+ */}
-              {/* Predictions */}
-              {Predictions.map((crop, index) => (
-                <Col xs={12} md={3} key={index}>
-                  <Card className="h-100 shadow-sm crop-card">
-                    <Card.Img
-                      variant="top"
-                      src={crop.image_url}
-                      height="250"
-                      style={{ objectFit: 'cover' }}
-                    />
-                    <Card.Body>
-                      <Card.Title>{crop.name}</Card.Title>
-                      <Card.Text>{crop.description}</Card.Text>
-                      <span className="badge bg-success">
-                        Confidence: {Math.round(crop.confidence * 100)}%
-                      </span>
-                    </Card.Body>
-                  </Card>
+            <Row className="g-4">
+              {/* Prediction Cards */}
+              {predictions.map((crop, index) => (
+                <Col xs={12} sm={6} md={4} lg={3} key={index}>
+                  <CropCard crop={crop} />
                 </Col>
               ))}
 
               {/* User Input Summary */}
-              <Col xs={12} md={3}>
+              <Col xs={12} sm={6} md={4} lg={3}>
                 <Card className="h-100 shadow-sm input-card">
                   <Card.Body>
                     <Card.Title>User Input Summary</Card.Title>
@@ -158,12 +140,65 @@ const PredictForm = ({ user }) => {
             </div>
           </div>
         )}
-
       </div>
-
       <Footer />
     </>
   );
-}
+};
+
+/**
+ * CropCard Component
+ * - Keeps confidence badge pinned at bottom
+ * - Shows "Read More / Read Less" only if description is long
+ * - Truncates description on mobile only
+ */
+const CropCard = ({ crop }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const shortText =
+    crop.description && crop.description.length > 80
+      ? crop.description.substring(0, 80) + "..."
+      : crop.description;
+
+  return (
+    <Card className="h-100 shadow-sm crop-card">
+      <Card.Img
+        variant="top"
+        src={crop.image_url}
+        style={{
+          height: "250px",
+          width: "100%",
+          objectFit: "cover",
+          objectPosition: "center",
+        }}
+      />
+      <Card.Body className="d-flex flex-column">
+        <div>
+          <Card.Title>{crop.name}</Card.Title>
+          <Card.Text className="d-none d-md-block">{crop.description}</Card.Text>
+          <Card.Text className="d-block d-md-none">
+            {expanded ? crop.description : shortText}
+          </Card.Text>
+
+          {crop.description && crop.description.length > 80 && (
+            <button
+              className="btn btn-link p-0 d-block d-md-none"
+              style={{ fontSize: "0.9rem" }}
+              onClick={() => setExpanded(!expanded)}
+            >
+              {expanded ? "Read Less" : "Read More"}
+            </button>
+          )}
+        </div>
+
+        <div className="mt-auto">
+          <span className="badge bg-success d-block mt-2">
+            Confidence: {Math.round(crop.confidence * 100)}%
+          </span>
+        </div>
+      </Card.Body>
+    </Card>
+  );
+};
 
 export default PredictForm;
