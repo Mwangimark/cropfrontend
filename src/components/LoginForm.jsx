@@ -5,7 +5,7 @@ import Loading from './Loading';
 
 
 
-function LoginForm({switchMode}) {
+function LoginForm({ switchMode }) {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -14,21 +14,21 @@ function LoginForm({switchMode}) {
   const navigate = useNavigate();
 
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true); 
+    setLoading(true);
     try {
       const data = await loginUser(formData);
 
-      localStorage.setItem('access',data.access); 
-      localStorage.setItem('refresh',data.refresh);
-      localStorage.setItem('user',JSON.stringify(data.user))
-      
-      
+      localStorage.setItem('access', data.access);
+      localStorage.setItem('refresh', data.refresh);
+      localStorage.setItem('user', JSON.stringify(data.user))
+
+
       setSuccess("Login successful!");
       setError('');
       navigate('/dashboard')
@@ -42,20 +42,21 @@ function LoginForm({switchMode}) {
       setLoading(false);
     }
   };
-  return loading ? ( <Loading /> ) : 
-  (
-    <form onSubmit={handleLogin} className="auth-form">
-      <input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-      <input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-      <button type="submit">Login</button>
+  return loading ? (<Loading />) :
+    (
+      <form onSubmit={handleLogin} className="auth-form">
+        <input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+        <input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+        <button type="submit">Login</button>
 
-      {error && <p style={{color: 'red'}}>{error}</p>}
-      {success && <p style={{color: 'green'}}>{success}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {success && <p style={{ color: 'green' }}>{success}</p>}
+        <p>Don't have an account? <span onClick={switchMode}>Sign up</span></p>
+        <p><span >Forgot Password</span></p>
 
-     <p>Don't have an account? <span onClick={switchMode}>Sign up</span></p>
 
-    </form>
-  );
+      </form>
+    );
 }
 
 export default LoginForm;
