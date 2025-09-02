@@ -14,6 +14,11 @@ import CropInfo from './pages/CropInfo';
 import ChatbotWithSubscription from './pages/ChatbotWithSubscription';
 import AboutUs from './pages/AboutUs';
 import Services from './pages/Services';
+import ForgotPassword from './components/ForgotPassword';
+import VerifyOtp from './components/VerifyOtp';
+import SetNewPassword from './components/SetNewPassword';
+
+
 
 
 
@@ -46,6 +51,11 @@ function App() {
       <Route path='/about-us' element={<AboutUs />} />
       <Route path='/services' element={<Services />} />
       <Route path='/contact_us' element={<Contactus/>} />
+
+      {/* password changing */}
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/verify-otp" element={<VerifyOtp />} />
+      <Route path="/reset-password" element={<SetNewPassword />} />
 
     </Routes>
   );
