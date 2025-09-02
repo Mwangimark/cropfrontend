@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function LoginSignupPage({switchMode}) {
-  const [activeForm, setActiveForm] = useState('signup');
+  const [activeForm, setActiveForm] = useState('login');
 
   return (
     <>
