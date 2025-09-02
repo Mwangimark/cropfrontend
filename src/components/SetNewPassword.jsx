@@ -5,6 +5,7 @@ import { Container, Row, Col, Card, Form, Button, Alert, InputGroup } from "reac
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import Header from "./Header";
 import Footer from "./Footer";
+import { API_BASE_URL } from "../api/auth";
 
 const SetNewPassword = () => {
   const location = useLocation();
@@ -21,7 +22,7 @@ const SetNewPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/set-password/", {
+      const res = await axios.post(`${API_BASE_URL}/set-password/`, {
         email,
         new_password: newPassword,
         confirm_password: confirmPassword,

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
+import { API_BASE_URL } from "../api/auth";
+
 
 const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
@@ -19,7 +21,7 @@ const VerifyOtp = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/verify_otp/", {
+      const response = await fetch(`${API_BASE_URL}/verify_otp/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
