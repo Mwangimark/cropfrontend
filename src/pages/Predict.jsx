@@ -127,14 +127,14 @@ const PredictForm = ({ user }) => {
   return (
     <>
       <DashboardHeader user={user} />
-      <h2 className="text-center mt-4">🌱 Crop Prediction</h2>
-      <div className="predict-bg py-2">
+      {/* <h2 className="text-center mt-1">🌱 Crop Prediction</h2> */}
+      <div className="predict-bg py-5 mt-2">
         {/* Input Form */}
         {!showPrediction && (
           <Row className="mt-0 g-4 justify-content-center align-items-start" >
 
             {/* Right - Prediction Form */}
-            <Col md={4} >
+            <Col md={{ span: 4, offset: 3 }} >
               <Card
                 className="p-2 shadow-sm"
                 style={{ maxWidth: "700px", margin: "0 auto", }}

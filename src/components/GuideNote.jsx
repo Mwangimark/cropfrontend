@@ -21,7 +21,7 @@ const GuideNote = () => {
           </li>
           <li>
             <FaBookOpen className="text-success me-2" />
-            Check the <strong>Crops Identity & Info</strong> section to learn
+            Check the <strong><a href="/crops">Crops Identity</a> or <a href="/more_info">More Info</a></strong> section to learn
             about typical soil requirements for different crops.
           </li>
           <li>
