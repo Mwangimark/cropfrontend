@@ -35,56 +35,75 @@ const PredictForm = ({ user }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePredict = async () => {
-    try {
-      setUserInputs({ ...formData });
-      setShowPrediction(false);
-      setPredictions([]);
-      setStatus(statusSteps[0]);
-      setProgress(25);
-      setLoading(true);
-
-      // 1️⃣ Start API call immediately (but don’t await yet)
-      const apiPromise = predictCrops(formData);
-
-      // 2️⃣ Run step simulation
-      let stepIndex = 0;
-      const interval = setInterval(() => {
-        stepIndex++;
-        if (stepIndex < statusSteps.length) {
-          setStatus(statusSteps[stepIndex]);
-          setProgress((stepIndex + 1) * 25);
-        } else {
-          clearInterval(interval);
-        }
-      }, 3000); // 3s per step
-
-      // 3️⃣ Wait for both API + steps to finish (12s total)
-      const [result] = await Promise.all([
-        apiPromise,
-        new Promise((resolve) => setTimeout(resolve, statusSteps.length * 3000)),
-      ]);
-
-      // 4️⃣ After last step → show results
-      if (result && result.predicted_crops) {
-        setStatus("🎉 Prediction Successful");
-        setProgress(100);
-        setPredictions(result.predicted_crops);
-        setShowPrediction(true);
-      } else {
-        setStatus("❌ Failed");
-        setProgress(0);
-        alert("Prediction failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error occurred while predicting crops:", error);
-      setStatus("❌ Error");
-      setProgress(0);
-      alert("An error occurred. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
+const handlePredict = async () => {
+  // Validation rules
+  const rules = {
+    nitrogen: { min: 0, max: 140 },
+    phosphorus: { min: 0, max: 100 },
+    potassium: { min: 0, max: 200 },
+    ph: { min: 3, max: 9 },
+    rainfall: { min: 0, max: 5000 },
+    temperature: { min: -10, max: 50 },
+    humidity: { min: 0, max: 100 },
   };
+
+  // Validate inputs
+  for (const [key, { min, max }] of Object.entries(rules)) {
+    const value = parseFloat(formData[key]);
+    if (isNaN(value) || value < min || value > max) {
+      alert(
+        `${key.charAt(0).toUpperCase() + key.slice(1)} must be between ${min} and ${max}`
+      );
+      return; // stop prediction
+    }
+  }
+
+  try {
+    setUserInputs({ ...formData });
+    setShowPrediction(false);
+    setPredictions([]);
+    setStatus(statusSteps[0]);
+    setProgress(25);
+    setLoading(true);
+
+    const apiPromise = predictCrops(formData);
+
+    let stepIndex = 0;
+    const interval = setInterval(() => {
+      stepIndex++;
+      if (stepIndex < statusSteps.length) {
+        setStatus(statusSteps[stepIndex]);
+        setProgress((stepIndex + 1) * 25);
+      } else {
+        clearInterval(interval);
+      }
+    }, 3000);
+
+    const [result] = await Promise.all([
+      apiPromise,
+      new Promise((resolve) => setTimeout(resolve, statusSteps.length * 3000)),
+    ]);
+
+    if (result && result.predicted_crops) {
+      setStatus("🎉 Prediction Successful");
+      setProgress(100);
+      setPredictions(result.predicted_crops);
+      setShowPrediction(true);
+    } else {
+      setStatus("❌ Failed");
+      setProgress(0);
+      alert("Prediction failed. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error occurred while predicting crops:", error);
+    setStatus("❌ Error");
+    setProgress(0);
+    alert("An error occurred. Please try again later.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
 
   const handleBack = () => {
@@ -116,13 +135,13 @@ const PredictForm = ({ user }) => {
           >
             <Form onSubmit={(e) => e.preventDefault()}>
               {[
-                { label: "Nitrogen", name: "nitrogen" },
-                { label: "Phosphorus", name: "phosphorus" },
-                { label: "Potassium", name: "potassium" },
-                { label: "pH", name: "ph", step: 0.1 },
-                { label: "Rainfall (mm)", name: "rainfall", step: 0.1 },
-                { label: "Temperature (°C)", name: "temperature", step: 0.1 },
-                { label: "Humidity (%)", name: "humidity", step: 0.1 },
+                { label: "Nitrogen (kg/ha)", name: "nitrogen", min: 0, max: 140, placeholder: "e.g. 60" },
+                { label: "Phosphorus (kg/ha)", name: "phosphorus", min: 0, max: 100, placeholder: "e.g. 40" },
+                { label: "Potassium (kg/ha)", name: "potassium", min: 0, max: 200, placeholder: "e.g. 50" },
+                { label: "Soil pH", name: "ph", step: 0.1, min: 3, max: 9, placeholder: "e.g. 6.5" },
+                { label: "Rainfall (mm)", name: "rainfall", step: 0.1, min: 0, max: 5000, placeholder: "e.g. 1200" },
+                { label: "Temperature (°C)", name: "temperature", step: 0.1, min: -10, max: 50, placeholder: "e.g. 25" },
+                { label: "Humidity (%)", name: "humidity", step: 0.1, min: 0, max: 100, placeholder: "e.g. 70" },
               ].map((input, idx) => (
                 <Form.Group className="mb-3" key={idx}>
                   <Form.Label>{input.label}</Form.Label>
@@ -130,6 +149,9 @@ const PredictForm = ({ user }) => {
                     type="number"
                     name={input.name}
                     step={input.step || 1}
+                    min={input.min}
+                    max={input.max}
+                    placeholder={input.placeholder}
                     value={formData[input.name]}
                     onChange={handleChange}
                     disabled={loading}
@@ -137,6 +159,7 @@ const PredictForm = ({ user }) => {
                   />
                 </Form.Group>
               ))}
+
 
               <div className="text-center">
                 <Button
